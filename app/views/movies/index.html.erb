@@ -1,0 +1,41 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Movies" %>
+
+<h1>All Movies</h1>
+
+<table id="movies" class="table table-striped col-md-12">
+  <thead>
+    <tr>
+      <th>Movie Title</th>
+      <th>Rating</th>
+      <th>Release Date</th>
+      <th>Description</th>
+      <th>More Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr id="movie_row_<%= movie.id %>" class="movie movie-container">
+        <td><%= movie.title %></td>
+        <td><%= movie.rating %></td>
+        <td><%= movie.release_date.strftime("%B %d, %Y") rescue movie.release_date %></td>
+        <td><%= movie.description %></td>
+        <td><%= link_to "More about #{movie.title}", movie_path(movie) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div id="movies_container" class="movies-container">
+  <% @movies.each do |movie| %>
+    <div id="<%= dom_id movie %>" class="movie movie-container">
+      <%= render movie %>
+      <p>
+        <%= link_to "Show this movie", movie %>
+      </p>
+    </div>
+  <% end %>
+</div>
+
+<%= link_to "New movie", new_movie_path %>
